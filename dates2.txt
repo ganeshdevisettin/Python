@@ -1,13 +1,12 @@
-march 18,336
-march 8,110
-march 10,494
-march 20,467
-march 1,212
-march 2,142
-march 14,326
-march 24,358
-march 25,323
-march 26,475
-march 19,460
-march 7,255
-march 29,232
+date,val,index
+march 5,292,3
+march 6,217,4
+march 2,192,0
+march 30,126,5
+march 29,66,2
+march 10,320,3
+march 14,120,7
+march 21,228,5
+march 23,236,7
+march 24,499,8
+march 25,205,9
