@@ -11,6 +11,7 @@ import random
 #hash table with ten spots assumed
 #displays hash values of dates
 
+#customize table length here
 HASH_TABLE_LENGTH = 10
 
 def get_hash(key):
@@ -23,7 +24,7 @@ hash_dict = {}
 
 #reads dates from file
 with open("dates.txt", "r") as f:
-    #creates dictionary
+    #adds to hash_dict dictionary
     for line in f:
         date = line.split(',')
         date = date[:-1]
