@@ -10,6 +10,7 @@ class HashTable:
     def __init__(self, probe_incr):
         self.MAX = 11
         self.prime = self.closest_prime_number(self.MAX)
+        #checking if prime correct
         print(self.prime)
         if (probe_incr == 'linear' or probe_incr == 'quadratic'  
             or probe_incr == 'double hash'):
