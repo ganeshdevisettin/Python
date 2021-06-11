@@ -11,8 +11,7 @@ import random
 #hash table with ten spots assumed
 #displays hash values of dates
 
-#customize table length here
-HASH_TABLE_LENGTH = 10
+HASH_TABLE_LENGTH = 11
 
 def get_hash(key):
     h = 0
@@ -24,20 +23,21 @@ hash_dict = {}
 
 #reads dates from file
 with open("dates.txt", "r") as f:
-    #adds to hash_dict dictionary
+    #creates dictionary
     for line in f:
         date = line.split(',')
-        date = date[:-1]
-        try:
-            date = date[0].lower()
-            date_hash = get_hash(date)
-            #in dict, key = date_hash and value = date
-            if date_hash in hash_dict:
-                hash_dict[date_hash].append(date)
-            else:
-                hash_dict[date_hash] = [date]
-        except:
-            continue
+        if len(date) > 1:
+            date = date[0:]
+            try:
+                date = date[0].lower()
+                date_hash = get_hash(date)
+                #in dict, key = date_hash and value = date
+                if date_hash in hash_dict:
+                    hash_dict[date_hash].append(date)
+                else:
+                    hash_dict[date_hash] = [date]
+            except:
+                continue
 
 hash_arr = [[]]*HASH_TABLE_LENGTH
 #transfers values from dictionary to array
@@ -66,6 +66,38 @@ def display_random_date_val_list():
             print(x[num] + ',' + str(int(random.random()*500)))
         else:
             print('(no value)')
+            
+def display_random_random_date_val_list():
+    date_table = []
+    for x in range(HASH_TABLE_LENGTH):
+        y = int(random.random()*HASH_TABLE_LENGTH)
+        if hash_arr[y] != []:
+            #creates random index
+            num = int(random.random()*len(hash_arr[y]))
+            #changes indexes if arr[y][num] already in list
+            while hash_arr[y][num] in date_table:
+                y = int(random.random()*HASH_TABLE_LENGTH)
+                num = int(random.random()*len(hash_arr[y]))
+            date_table.append(hash_arr[y][num])
+            #uses num to grab random date
+            print(hash_arr[y][num] + ',' + str(int(random.random()*500)))
+        else:
+            print('(no value)')
 
-
-    
+def display_random_random_date_val_list_with_index():
+    date_table = []
+    for x in range(HASH_TABLE_LENGTH):
+        y = int(random.random()*HASH_TABLE_LENGTH)
+        if hash_arr[y] != []:
+            #creates random index
+            num = int(random.random()*len(hash_arr[y]))
+            #changes indexes if arr[y][num] already in list
+            while hash_arr[y][num] in date_table:
+                y = int(random.random()*HASH_TABLE_LENGTH)
+                num = int(random.random()*len(hash_arr[y]))
+            date_table.append(hash_arr[y][num])
+            #uses num to grab random date
+            print(hash_arr[y][num] + ',' + str(int(random.random()*500)) + 
+                  ',' + str(y))
+        else:
+            print('(no value)')
