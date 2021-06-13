@@ -6,12 +6,12 @@ Created on Thu Jun 10 10:45:10 2021
 @author: ganeshdevisetti
 """
 
+import time
+
 class HashTable:
     def __init__(self, probe_incr):
         self.MAX = 11
         self.prime = self.closest_prime_number(self.MAX)
-        #checking if prime correct
-        print(self.prime)
         if (probe_incr == 'linear' or probe_incr == 'quadratic'  
             or probe_incr == 'double hash'):
             self.probe_incr = probe_incr
@@ -23,18 +23,30 @@ class HashTable:
             raise Exception("Probe increment/separate chaining\
  must be specified\noptions include 'linear', 'quadratic', 'double hash',\
  'sep chaining'")
+ 
+    def string_sum(self, key):
+        h = 0
+        mul = 1
+        for x in range(len(key)):
+            mul = mul*256 if x%4 != 0 else 1
+            h += ord(key[x])*mul
+        return h
+    
+    def string_sum2(self, key):
+        return sum([ord(ch) for ch in key])
     
     def get_hash(self, key):
-        return sum([ord(ch) for ch in key]) % self.MAX
+        return self.string_sum(key) % self.MAX
     
     def get_hash2(self, key):
-        return self.prime - (self.get_hash(key) % self.prime)
+        return self.prime - (self.string_sum(key) % self.prime)
         
     def closest_prime_number(self, num):
+        num -= 1
         while True:
             i = 2
             while i < num//2+1:
-                if num % i == 0 or num == self.MAX:
+                if num % i == 0:
                     num -= 1
                     break
                 i += 1
@@ -44,14 +56,14 @@ class HashTable:
             
     def __setitem__(self, key, val):
         h = self.get_hash(key)
-        i = h
-        count = 1
-        removed = -1
         found = False
         if self.probe_incr != "sep chaining":
+            count = 1
+            removed = -1
+            i = h
             while count < self.MAX+1 and self.arr[i] != None:
                 if removed == -1 and self.arr[i] == ():
-                    removed = h
+                    removed = i
                 elif self.arr[i] != () and self.arr[i][0] == key:
                     found = True
                     break
@@ -66,8 +78,6 @@ class HashTable:
             else:
                 print("\nException: Overflow\ncannot insert" \
                                 + str((key, val)) + '\n')
-            # for error checking
-            print(str(t.arr) + '\n')
         else:
             for idx, elem in enumerate(self.arr[h]):
                 if elem[0] == key:
@@ -123,9 +133,10 @@ class HashTable:
         else:
             h2 = self.get_hash2(key)
             return count*h2
-
+        
+start = time.time()
 # creates hashtable which reads in input from file
-t = HashTable('sep chaining')
+t = HashTable('double hash')
 # file must be formatted as dates2.txt in order for input
 # reading to work
 # dates2.txt format:
@@ -141,9 +152,14 @@ with open("dates2.txt", "r") as f:
         except:
             print("Invalid line")
 
+end = time.time()
+print(str(end-start) + " ms")
+
+# print("Your hash table looks like this:")
+# print(t.arr)
+
 # test code
 
-# print(t.arr)
 # del t['march 7']
 # print(t.arr)
 # t['march 17'] = 45
