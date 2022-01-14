@@ -7,21 +7,10 @@ def to_evaluator(repeat):
         else:
             repeat = input("\nPlease enter a valid answer ('yes' or 'no')\nWould you like to add another place (yes/ no)? ")
 
-places = []
-
 while True:
-    place = input("\nIf you could visit one place in the world, where would you go? ")
-    places.append(place)
     repeat = input("Would you like to add another place (yes/ no)? ")
     to_eval = to_evaluator(repeat)
     if to_eval:
-        break
+        print("You have chosen 'no'")
     elif not(to_eval):
-        continue
-
-print("\n--- Poll Results ---")
-for place in places:
-    print(f'    {place}')
-
-
-
+        print("You have chosen 'yes'")
